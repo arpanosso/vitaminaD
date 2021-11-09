@@ -30,12 +30,16 @@ da <- dados |>
 
 ``` r
 for(i in 1:length(da)){
+  print("================")
   print(names(da[i]))
+  print("================")
   y <- da[,i]
   print(agricolae::kruskal(y, dados$tem_tumor,
                      console = TRUE))
 }
+#> [1] "================"
 #> [1] "percent_gordura"
+#> [1] "================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -85,7 +89,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
+#> [1] "================"
 #> [1] "idade"
+#> [1] "================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -135,7 +141,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
+#> [1] "================"
 #> [1] "peso"
+#> [1] "================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -185,7 +193,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
+#> [1] "================"
 #> [1] "vit_d"
+#> [1] "================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -235,7 +245,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
+#> [1] "================"
 #> [1] "bmc_massa_mineral_ossea"
+#> [1] "================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's

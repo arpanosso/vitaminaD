@@ -37,7 +37,9 @@ da <- dados |>
 
 ```{r}
 for(i in 1:length(da)){
+  print("================")
   print(names(da[i]))
+  print("================")
   y <- da[,i]
   print(agricolae::kruskal(y, dados$tem_tumor,
                      console = TRUE))
