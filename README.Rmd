@@ -18,15 +18,30 @@ library(readxl)
 dados <- read_excel("data-raw/vitaminaD.xls")
 dados <- dados |>
   janitor::clean_names()
-View(dados)
+
 ```
 
 Análise não paramétrica (pois foram observados grande assimetria nos valores das variáveis contínuas), então optou-se pela abordagem não paramétrica para todo o grupo de variáveis estudadas.
 
 ```{r}
-agricolae::kruskal(dados$idade, dados$tem_tumor,
-                   console = TRUE)
-tapply(dados$idade, dados$tem_tumor, mean)
+da <- dados |> 
+  dplyr::select(
+    percent_gordura,
+    idade,
+    peso,
+    vit_d,
+    bmc_massa_mineral_ossea
+  )
+```
+
+
+```{r}
+for(i in 1:length(da)){
+  print(names(da[i]))
+  y <- da[,i]
+  print(agricolae::kruskal(y, dados$tem_tumor,
+                     console = TRUE))
+}
 ```
 
 
