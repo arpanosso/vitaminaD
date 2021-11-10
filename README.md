@@ -13,6 +13,19 @@ dados <- dados |>
   janitor::clean_names()
 ```
 
+Adição de novos dados.
+
+``` r
+novos <- read_excel("data-raw/densidade mineral ossea dos animais do artigo.xlsx")
+#> New names:
+#> * Animal -> Animal...1
+#> * Animal -> Animal...2
+novos <- novos |>
+  janitor::clean_names()
+dados <- dplyr::left_join(dados, novos, by="animal_1") |> 
+  dplyr::select(-animal_2.y)
+```
+
 Análise não paramétrica (pois foram observados grande assimetria nos
 valores das variáveis contínuas), então optou-se pela abordagem não
 paramétrica para todo o grupo de variáveis estudadas.
@@ -24,22 +37,23 @@ da <- dados |>
     idade,
     peso,
     vit_d,
-    bmc_massa_mineral_ossea
+    bmc_massa_mineral_ossea,
+    densidade_mineral_ossea
   )
 ```
 
 ``` r
 for(i in 1:length(da)){
-  print("================")
+  print("============================")
   print(names(da[i]))
-  print("================")
+  print("============================")
   y <- da[,i]
   print(agricolae::kruskal(y, dados$tem_tumor,
                      console = TRUE))
 }
-#> [1] "================"
+#> [1] "============================"
 #> [1] "percent_gordura"
-#> [1] "================"
+#> [1] "============================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -89,9 +103,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
-#> [1] "================"
+#> [1] "============================"
 #> [1] "idade"
-#> [1] "================"
+#> [1] "============================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -141,9 +155,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
-#> [1] "================"
+#> [1] "============================"
 #> [1] "peso"
-#> [1] "================"
+#> [1] "============================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -193,9 +207,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
-#> [1] "================"
+#> [1] "============================"
 #> [1] "vit_d"
-#> [1] "================"
+#> [1] "============================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -245,9 +259,9 @@ for(i in 1:length(da)){
 #> 
 #> attr(,"class")
 #> [1] "group"
-#> [1] "================"
+#> [1] "============================"
 #> [1] "bmc_massa_mineral_ossea"
-#> [1] "================"
+#> [1] "============================"
 #> 
 #> Study: y ~ dados$tem_tumor
 #> Kruskal-Wallis test's
@@ -294,6 +308,58 @@ for(i in 1:length(da)){
 #>           y groups
 #> 2 14.500000      a
 #> 1  9.272727      a
+#> 
+#> attr(,"class")
+#> [1] "group"
+#> [1] "============================"
+#> [1] "densidade_mineral_ossea"
+#> [1] "============================"
+#> 
+#> Study: y ~ dados$tem_tumor
+#> Kruskal-Wallis test's
+#> Ties or no Ties
+#> 
+#> Critical Value: 3.185606
+#> Degrees of freedom: 1
+#> Pvalue Chisq  : 0.07428944 
+#> 
+#> dados$tem_tumor,  means of the ranks
+#> 
+#>           y  r
+#> 1  9.363636 11
+#> 2 14.416667 12
+#> 
+#> Post Hoc Analysis
+#> 
+#> t-Student: 2.079614
+#> Alpha    : 0.05
+#> Groups according to probability of treatment differences and alpha level.
+#> 
+#> Treatments with the same letter are not significantly different.
+#> 
+#>           y groups
+#> 2 14.416667      a
+#> 1  9.363636      a
+#> $statistics
+#>      Chisq Df    p.chisq
+#>   3.185606  1 0.07428944
+#> 
+#> $parameters
+#>             test p.ajusted          name.t ntr alpha
+#>   Kruskal-Wallis      none dados$tem_tumor   2  0.05
+#> 
+#> $means
+#>            y      rank         std  r    Min      Max      Q25     Q50    Q75
+#> 1  0.6307909  9.363636   0.1917775 11 0.2863    0.971 0.540950 0.59000 0.7090
+#> 2 87.4299000 14.416667 300.2967355 12 0.5670 1041.000 0.595625 0.74215 0.9052
+#> 
+#> $comparison
+#> NULL
+#> 
+#> $groups
+#>           y groups
+#> 2 14.416667      a
+#> 1  9.363636      a
 #> 
 #> attr(,"class")
 #> [1] "group"
